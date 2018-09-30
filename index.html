@@ -77,10 +77,11 @@
 			const fgshader_code = `
 				precision highp float;
 				uniform vec2 iResolution;
-				uniform int iGlobalTime;
-				void main() {
-					float time = float(iGlobalTime);
-					vec2 uv = (gl_FragCoord.xy / iResolution.xx - vec2(0.5,0.5)) * 8.0;
+				uniform float Time;
+				void main() 
+				{
+					float time = Time * 0.001;
+					vec2 uv = (gl_FragCoord.xy / iResolution.xx - 0.5) * 8.0;
 					vec2 uv0 = uv;
 					float i0 = 1.0;
 					float i1 = 1.0;
@@ -92,13 +93,13 @@
 						r += vec2(-r.y, r.x) * 0.3;
 						uv.xy += r;
 
-						i0 *= 1.93;
-						i1 *= 1.15;
-						i2 *= 1.7;
+						i0 *= 1.7;
+						i1 *= 2.;
+						i2 *= 1.65;
 						i4 += 0.05 + 0.1 * time * i1;
 					}
-					float r = sin(uv.x - time) * 0.5 + 0.5;
-					float b = sin(uv.y + time) * 0.5 + 0.5;
+					float r = sin(uv.x - time) * 0.3 + 0.6;
+					float b = sin(uv.y + time) * 0.3 + 0.6;
 					float g = sin((uv.x + uv.y + sin(time * 0.5)) * 0.5) * 0.5 + 0.5;
 					gl_FragColor = vec4(r, g, b, 1.0);
 				}
@@ -107,18 +108,21 @@
 			const pipeline = pipeline_init(canvas, vtshader_code, fgshader_code);
 			canvas.useProgram(pipeline);
 			const coord_location = canvas.getAttribLocation(pipeline, "aVertexPosition");
-			const time_location = canvas.getUniformLocation(pipeline, "iGlobalTime");
+			const time_location = canvas.getUniformLocation(pipeline, "Time");
 			const resolution_location = canvas.getUniformLocation(pipeline, "iResolution");
 			canvas.viewport(0,0,canvas_raw.width,canvas_raw.height);
 			canvas.bindBuffer(canvas.ARRAY_BUFFER, vertex_buffer);
 			canvas.bufferData(canvas.ARRAY_BUFFER, new Float32Array(vertices), canvas.STATIC_DRAW);
 			canvas.vertexAttribPointer(coord_location, 2, canvas.FLOAT, false, 0, 0);
 			canvas.enableVertexAttribArray(coord_location);
-			for(;;) {
-				canvas.uniform2iv(resolution_location, [canvas_raw.width,canvas_raw.height]);
-				canvas.uniform1i(time_location, Date.now());
+			var start = Date.now();
+			function render() {
+				canvas.uniform1f(time_location, (Date.now() - start).toFixed(2));
+				canvas.uniform2fv(resolution_location, [canvas_raw.width,canvas_raw.height]);
 				canvas.drawArrays(canvas.TRIANGLE_STRIP, 0, 4);
+				requestAnimationFrame(render);
 			}
+			requestAnimationFrame(render);
 
 			function shader_init(canvas, shader_type, source_code) {
 				const _shader = canvas.createShader(shader_type);
