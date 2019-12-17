@@ -1,161 +1,82 @@
+ 
+<!--!! remember to remove . in each path before pushing to web-->
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>ldm0</title>
-	</head>
-	<body>
-		<canvas id="canvas" >
-			The canvas
-		</canvas>
-		<div id="resume">
-			<h1>This is the ldm0's personal website</h1>Name: Donough Liu<br>QQ: 2993593805<br>Email: ldm2993593805@163.com<br>GitHub: ldm0<br>College: BUPT<br>I'm glad to talk to strangers(only on the internet) and have a wide rage of interests.<br>Welcome to chat with me!<br>
-			<br><br>My GEEK CODE<br>-----BEGIN GEEK CODE BLOCK-----<br> Version: 3.1<br> GCS/E/M/MU/P d-- s+:+ a--- C+++ !UL* P? L+++ !E W+++? N? o? K--? w++ <br>!O !M !V PS+ PE Y+ !PGP t? 5? X? !R tv-- b+ DI D? G e h r y- <br> ------END GEEK CODE BLOCK------<br>
-		</div>
-		<div id="github_corner">
-			<a href="https://github.com/ldm0" class="github-corner" aria-label="View source on Github"><svg width="80" height="80"
-				viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
-					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-					fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-					fill="currentColor" class="octo-body"></path>
-				</svg></a>
-			<style>
-				canvas {
-					position:absolute;
-					top:0;
-					left:0;
-					z-index:-1;
-				}
-				.github-corner:hover .octo-arm {
-					animation: octocat-wave 560ms ease-in-out
-				}
-				@keyframes octocat-wave {
-					0%,
-					100% {
-						transform: rotate(0)
-					}
-					20%,
-					60% {
-						transform: rotate(-25deg)
-					}
-					40%,
-					80% {
-						transform: rotate(10deg)
-					}
-				}
-				@media (max-width:500px) {
-					.github-corner:hover .octo-arm {
-						animation: none
-					}
-					.github-corner .octo-arm {
-						animation: octocat-wave 560ms ease-in-out
-					}
-				}
-			</style>
-		</div>
-		<script>
-			const canvas_raw = document.getElementById("canvas");
-			canvas_raw.width = window.innerWidth;
-			canvas_raw.height = window.innerHeight;
-			const canvas = canvas_raw.getContext("webgl");
-			if (!canvas) console.error("Create webgl context failed!");
+    <head>
+        <title>ldm0's Blog</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="./css/common.css">
+        <link rel="stylesheet" type="text/css" href="./css/homepage.css">
+        <script defer src="./js/widget_fun.js"></script>
+    </head>
+    <body>
+        <div id="widget_plate">
+            <div class="widget" id="widget_home_page">
+                <a href="./index.html">
+                    <img src="./assets/homepage.png" alt="homepage">
+                </a>
+            </div>
+            <div class="widget" id="widget_blog_cluster">
+                <!--blogs clustered by different tags-->
+                <a href="./cluster.html">
+                    <img src="./assets/cluster.png" alt="cluster">
+                </a>
+            </div>
+            <div class="widget" id="widget_fun">
+                <!--some fun demo-->
+                <a href="./fun.html">
+                    <img src="./assets/fun.png" alt="fun">
+                </a>
+                <canvas id="widget_fun_canvas"></canvas>
+            </div>
+        </div>
+        <div class="blog">
+            <!--Blog chunks usually sorted with timeline.-->
+            <!--Blog chunks below should be generated with generator.-->
+            
+            <div class="blog_chunk">
+                <div class="blog_chunk_left">
+                    <div class="blog_chunk_title">
+                        <a href="is-it-working.html">Is it working?</a>
+                    </div>
+                    <div class="blog_chunk_preview">
+                        First Blog<br>
+                    </div>
+                </div>
+                <div class="blog_chunk_right">
+                    <div class="blog_chunk_tags"> 
+                        <div class="blog_chunk_tag">Life</div>
+                        <div class="blog_chunk_tag">Programming</div> 
+                    </div>
+                </div>
+            </div>
 
-			const vertices = [
-				-1, 1,
-				-1, -1,
-				1, 1,
-				1, -1,
-			];
+            <div class="blog_chunk">
+                <div class="blog_chunk_left">
+                    <div class="blog_chunk_title">
+                        <a href="markdown-compatibility-test.html">Markdown Compatibility Test</a>
+                    </div>
+                    <div class="blog_chunk_preview">
+                        This blog is mainly used to test markdown and trivial things like emoji and Unicode 😎<br>
+                    </div>
+                </div>
+                <div class="blog_chunk_right">
+                    <div class="blog_chunk_tags"> 
+                        <div class="blog_chunk_tag">Life</div>
+                        <div class="blog_chunk_tag">Programming</div> 
+                    </div>
+                </div>
+            </div>
 
-			const vtshader_code = `
-				attribute vec4 aVertexPosition;
-				void main()
-				{
-					gl_Position = aVertexPosition;
-				}
-			`;
-
-			const fgshader_code = `
-				precision highp float;
-				uniform vec2 iResolution;
-				uniform float Time;
-				void main() 
-				{
-					float time = Time * 0.001;
-					vec2 uv = (gl_FragCoord.xy / iResolution.xx - 0.5) * 8.0;
-					vec2 uv0 = uv;
-					float i0 = 1.0;
-					float i1 = 1.0;
-					float i2 = 1.0;
-					float i4 = 0.0;
-					for (int s = 0; s < 7; s++) {
-						vec2 r;
-						r = vec2(cos(uv.y * i0 - i4 + time / i1), sin(uv.x * i0 - i4 + time / i1)) / i2;
-						r += vec2(-r.y, r.x) * 0.3;
-						uv.xy += r;
-
-						i0 *= 1.7;
-						i1 *= 2.;
-						i2 *= 1.65;
-						i4 += 0.05 + 0.1 * time * i1;
-					}
-					float r = sin(uv.x - time) * 0.3 + 0.6;
-					float b = sin(uv.y + time) * 0.3 + 0.6;
-					float g = cos((uv.x + uv.y + sin(time * 0.5)) * 0.5) * 0.5 + 0.5;
-					gl_FragColor = vec4(r, g, b, 1.0);
-				}
-			`;
-			const vertex_buffer = canvas.createBuffer();
-			const pipeline = pipeline_init(canvas, vtshader_code, fgshader_code);
-			canvas.useProgram(pipeline);
-			const coord_location = canvas.getAttribLocation(pipeline, "aVertexPosition");
-			const time_location = canvas.getUniformLocation(pipeline, "Time");
-			const resolution_location = canvas.getUniformLocation(pipeline, "iResolution");
-			canvas.viewport(0,0,canvas_raw.width,canvas_raw.height);
-			canvas.bindBuffer(canvas.ARRAY_BUFFER, vertex_buffer);
-			canvas.bufferData(canvas.ARRAY_BUFFER, new Float32Array(vertices), canvas.STATIC_DRAW);
-			canvas.vertexAttribPointer(coord_location, 2, canvas.FLOAT, false, 0, 0);
-			canvas.enableVertexAttribArray(coord_location);
-			var start = Date.now();
-			function render() {
-				canvas.uniform1f(time_location, (Date.now() - start).toFixed(2));
-				canvas.uniform2fv(resolution_location, [canvas_raw.width,canvas_raw.height]);
-				canvas.drawArrays(canvas.TRIANGLE_STRIP, 0, 4);
-				requestAnimationFrame(render);
-			}
-			requestAnimationFrame(render);
-
-			function shader_init(canvas, shader_type, source_code) {
-				const _shader = canvas.createShader(shader_type);
-				canvas.shaderSource(_shader, source_code);
-				canvas.compileShader(_shader);
-				if (!canvas.getShaderParameter(_shader,canvas.COMPILE_STATUS)) {
-					console.error("Cannot compile shader:" + canvas.getShaderInfoLog(_shader));
-					canvas.deleteShader(_shader);
-					return null;
-				}
-				return _shader;
-			}
-			function shader_link(canvas, vt_shader, fg_shader) {
-				const _pipeline = canvas.createProgram();
-				canvas.attachShader(_pipeline, vt_shader);
-				canvas.attachShader(_pipeline, fg_shader);
-				canvas.deleteShader(vt_shader);
-				canvas.deleteShader(fg_shader);
-				canvas.linkProgram(_pipeline);
-				if (!canvas.getProgramParameter(_pipeline, canvas.LINK_STATUS)) {
-					console.error("Cannot linke the compiled shaders" + canvas.getProgramInfoLog(_pipeline));
-					canvas.deleteProgram(_pipeline);
-					return null;
-				}
-				return _pipeline;
-			}
-			function pipeline_init(canvas, vtshader_code, fgshader_code) {
-				const _vt_shader = shader_init(canvas, canvas.VERTEX_SHADER, vtshader_code);
-				const _fg_shader = shader_init(canvas, canvas.FRAGMENT_SHADER, fgshader_code);
-				const _pipeline = shader_link(canvas, _vt_shader, _fg_shader);
-				return _pipeline;
-			}
-		</script>
-	</body>
+        </div>
+        <div id="tail">
+            <div id="tail_github">
+                <a href="https://github.com/ldm0">Github</a>
+            </div>
+            <div id="tail_email">
+                <a href=mailto:ldm2993593805@163.com>Email</a>
+            </div>
+        </div>
+    </body>
 </html>

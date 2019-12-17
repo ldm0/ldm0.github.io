@@ -1,2 +1,4 @@
 # ldm0.github.io
-my website
+
++ My Blog Gen with Rust https://github.com/ldm0/Blogen
+
