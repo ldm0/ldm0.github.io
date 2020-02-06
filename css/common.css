@@ -4,6 +4,10 @@ html {
     line-height: 1.618em;
 }
 
+pre {
+    margin: 0;
+}
+
 #widget_plate {
     position: fixed;
     top: 10%;
@@ -55,6 +59,7 @@ html {
     background-color: #FFFFFF00;
 }
 
+/* Stop fucking reader -_-b
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -71,3 +76,4 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #0000007F;
 }
+*/
