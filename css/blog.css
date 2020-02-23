@@ -1,4 +1,6 @@
 h1, h2, h3 {
+    margin: 0;
+    padding: 0.5em 0;
     box-shadow: 0 2px 0px #0000003f
 }
 
@@ -88,6 +90,7 @@ ul, ol {
 }
 
 #blog_tags {
+    padding: 30px 0;
     text-align: center;
 }
 
@@ -105,12 +108,14 @@ ul, ol {
 }
 
 .latex {
-    font-family: sans-serif;
     display: inline;
+    /*
+    font-family: sans-serif;
     overflow-x: auto;
+    */
 }
 
-/*
+/* Still no way to overflow the matchjax
 .MJX-TEX {
     font-family: sans-serif;
     display: inline;
