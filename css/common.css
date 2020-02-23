@@ -4,10 +4,6 @@ html {
     line-height: 1.618em;
 }
 
-pre {
-    margin: 0;
-}
-
 #widget_plate {
     position: fixed;
     top: 10%;
@@ -21,7 +17,6 @@ pre {
 .widget {
     width: 64px;
     height: 70px;
-    padding: 3px 0;
     position: relative;
 }
 .widget>a {

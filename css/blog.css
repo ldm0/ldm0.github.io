@@ -1,18 +1,32 @@
-h1 {
-    padding: 2em 0 1em 0;
+h1, h2, h3 {
+    box-shadow: 0 2px 0px #0000003f
+}
+
+a {
+    font-family: sans-serif;
 }
 
 pre {
     background-color: #EEE;
     padding: 1em;
+    overflow: auto;
+    /*
     white-space: pre-wrap;
     word-break: keep-all;
+    */
+}
+
+code {
+    font-size: 16px;
+    font-family: Consolas, monospace;
+    line-height: 16px;
+    padding: 3px 7px;
+    background-color: #EEE;
 }
 
 pre>code {
-    font-size: 1em;
-    font-family: Consolas, monospace;
-    line-height: 1em;
+    padding: 0;
+    background-color: unset;
 }
 
 blockquote {
@@ -30,10 +44,13 @@ table {
     border-collapse: collapse;
 }
 
-th,
-td {
+th, td {
     border: 1px solid black;
     padding: .1em .5em;
+}
+
+ul, ol {
+    padding-inline-start: 20px;
 }
 
 
@@ -45,24 +62,29 @@ td {
 }
 
 #blog_title {
-    font-size: 2em;
+    padding: 30px 0;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 60px;
     text-align: center;
 }
 
 #blog_time {
     font-size: 0.8em;
     text-align: center;
-    padding: 0.3px;
+    padding: 10px 0;
 }
 
 #blog_preview {
     color: #555;
     background-color: #EEE;
-    padding: 1em;
+    padding: 0.5em 1em;
 }
 
 #blog_content {
+    /* No padding seems better
     padding: 0.6em 5%;
+    */
 }
 
 #blog_tags {
@@ -85,4 +107,13 @@ td {
 .latex {
     font-family: sans-serif;
     display: inline;
+    overflow-x: auto;
 }
+
+/*
+.MJX-TEX {
+    font-family: sans-serif;
+    display: inline;
+    overflow-x: auto;
+}
+*/
