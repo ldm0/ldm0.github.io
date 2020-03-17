@@ -1,7 +1,19 @@
 h1, h2, h3 {
     margin: 0;
     padding: 0.5em 0;
+}
+
+/* Different underline */
+h1 {
+    box-shadow: 0 3px 0px #0000003f
+}
+
+h2 {
     box-shadow: 0 2px 0px #0000003f
+}
+
+h3 {
+    box-shadow: 0 1px 0px #0000003f
 }
 
 a {
@@ -81,6 +93,7 @@ ul, ol {
     color: #555;
     background-color: #EEE;
     padding: 0.5em 1em;
+    margin-bottom: 1em;
 }
 
 #blog_content {

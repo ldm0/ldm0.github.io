@@ -1,0 +1,117 @@
+
+<!--
+Stop checking the code! :-P
+These pages are powered by my own framework.
+You can easily get Source code from https://github.com/ldm0/Blogen
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Using FFmpeg library in Rust</title>
+        <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="./css/common.css">
+        <link rel="stylesheet" type="text/css" href="./css/blog.css">
+        <script defer src="./js/widget_fun.js"></script>
+        <script> 
+            MathJax = {
+                tex: {
+                    inlineMath:[['$', '$']],
+                    displayMath:[['$$', '$$']]
+                }
+            }
+        </script>
+        <script id="MathJax-script" async src="./js/mathjax/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+        <div id="widget_plate">
+            <div class="widget" id="widget_home_page">
+                <a href="./index.html">
+                    <img src="./assets/homepage.png" alt="homepage">
+                </a>
+            </div>
+            <div class="widget" id="widget_blog_cluster">
+                <!--blogs clustered by different tags-->
+                <a href="./cluster.html">
+                    <img src="./assets/cluster.png" alt="cluster">
+                </a>
+            </div>
+            <div class="widget" id="widget_fun">
+                <!--some fun demo-->
+                <a href="./fun.html">
+                    <img src="./assets/fun.png" alt="fun">
+                </a>
+                <canvas id="widget_fun_canvas"></canvas>
+            </div>
+        </div>
+        <div id="blog">
+            <div id="blog_title">
+                Using FFmpeg library in Rust
+            </div>
+            <div id="blog_time">
+                2020/3/18
+            </div>
+            <div id="blog_preview">
+                Use the inner library of FFmpeg in Rust through FFI.
+            </div>
+            <div id="blog_content">
+                <blockquote>
+<p>Due to the boring school lessons, I decided to participate in GSoC 2020 this year. Since I worked on some Rust projects before, the <code>FFmpeg + Rust: Code builder</code> GSoC project really caught me. Then I started to do some pre-work. The pre-work consists of several parts and I will talk about the FFI part in this blog post.</p>
+</blockquote>
+<h2>Intro</h2>
+<p>FFmpeg project not only provides us ffmpeg, ffplay and ffprobe. They also packed their inner modules for us which can be easily used(relatively). FFmpeg is written in C and that's very convenient for FFI.</p>
+<h2>Coding</h2>
+<p>First, we need some application code which uses the library. Though I have looked into the libavfilter, I'm not quite familiar with the other ffmpeg interfaces. So I searched for some c code that uses the ffmpeg inner libraries, then I got <a href="https://github.com/leandromoreira/ffmpeg-libav-tutorial">this</a>. This is a FFmpeg library using tutorial, which is actually pretty good. I choose the <a href="https://github.com/leandromoreira/ffmpeg-libav-tutorial/blob/master/0_hello_world.c">first demo</a> to port it into Rust.</p>
+<h2>Porting</h2>
+<p>This demo uses libavcodec and libavformat. To get proper linting when language porting, function and data structures declaration is needed. So I start to translate the header file into Rust. That's an impossible mission. 5 minutes later I realized that's impossible. Luckily I found the <a href="https://github.com/rust-lang/rust-bindgen">bingen</a>. It parses the C header file and automatically generates the corresponding Rust expression. The only problem is that C macros are not translated, we need to manually convert them(not quite hard though). With the generated interfaces, I successfully ported the demo into Rust after some fierce fight with unsafe and type inference lol. The only thing make me sad is that the original demo code has some bug which lead to segment fault and took me several hours to figured out that's not my problem... I sent them a <a href="https://github.com/leandromoreira/ffmpeg-libav-tutorial/pull/60">pull request</a> to fix it. Souce code is <a href="https://github.com/ldm0/no_name/blob/master/src/main.rs">here</a>.</p>
+<h2>Building</h2>
+<p>The hardest part is actually building it. My first FFmpeg build is on Windows using msvc(debug a complex codebase with Visual Studio is enjoyable). However, object file generated with clang cannot be linked with msvc lib file. So I migrated to Linux and built FFmpeg libraries with Linux toolchain. The dependencies use in the demo code building process is miscellaneous. I started by finding corresponding dependencies with unresolved external function names and that's also a impossible mission. Then I found that in FFmpeg project the <code>ffbuild/config.mak</code> file generated with the <code>configure</code> script contains compiler parameters for the each library. After turning the compiler parameters to Rust build script, the demo works!</p>
+<pre><code>initializing all the containers, codecs and protocols.
+opening the input file (bear.mp4) and loading format (container) header
+format mov,mp4,m4a,3gp,3g2,mj2, duration 1066667 us, bit_rate 0
+finding stream info from format
+AVStream-&gt;time_base before open coded 1/44100
+AVStream-&gt;r_frame_rate before open coded 0/0
+AVStream-&gt;start_time 1024
+AVStream-&gt;duration 47104
+finding the proper decoder (CODEC)
+Audio Codec: 2 channels, sample rate 44100
+        Codec aac ID 86018 bit_rate 74553
+AVStream-&gt;time_base before open coded 1/30000
+AVStream-&gt;r_frame_rate before open coded 30000/1001
+AVStream-&gt;start_time 1001
+AVStream-&gt;duration 30030
+finding the proper decoder (CODEC)
+Video Codec: resolution 320 x 180
+        Codec h264 ID 27 bit_rate 233574
+AVPacket-&gt;pts 1001
+AVPacket-&gt;pts 3003
+Frame 1 (type=73, size=6355 bytes) pts 1001 key_frame 1 [DTS 0]
+AVPacket-&gt;pts 2002
+Frame 2 (type=66, size=216 bytes) pts 2002 key_frame 0 [DTS 2]
+AVPacket-&gt;pts 5005
+Frame 3 (type=80, size=1028 bytes) pts 3003 key_frame 0 [DTS 1]
+AVPacket-&gt;pts 4004
+Frame 4 (type=66, size=329 bytes) pts 4004 key_frame 0 [DTS 4]
+AVPacket-&gt;pts 7007
+Frame 5 (type=80, size=1223 bytes) pts 5005 key_frame 0 [DTS 3]
+AVPacket-&gt;pts 6006
+Frame 6 (type=66, size=260 bytes) pts 6006 key_frame 0 [DTS 6]
+AVPacket-&gt;pts 9009
+Frame 7 (type=80, size=1160 bytes) pts 7007 key_frame 0 [DTS 5]
+releasing all the resources
+</code></pre>
+
+            </div>
+            <div id="blog_tags">
+                
+
+                <div class="tag">Rust</div>
+                <div class="tag">C</div>
+                <div class="tag">Programming</div>
+                <div class="tag">English</div>
+
+            </div>
+        </div>
+    </body>
+</html>
