@@ -1,11 +1,11 @@
-let vertices = [
+const vertices = [
     -1, 1,
     -1, -1,
     1, 1,
     1, -1,
 ];
 
-let vt_shader_code = `
+const vt_shader_code = `
 attribute vec4 vertex_position;
 void main()
 {
@@ -13,7 +13,7 @@ void main()
 }
 `;
 
-let fg_shader_code =`
+const fg_shader_code =`
 precision highp float;
 uniform vec2 resolution;
 uniform float time;
@@ -43,8 +43,6 @@ void main()
     gl_FragColor = vec4(r, g, b, z);
 }
 `;
-
-main();
 
 function webgl_tools() {
     // assume canvas_size not change in whole life of this page
@@ -137,11 +135,11 @@ function main() {
     {
         let widget_fun = document.getElementById("widget_fun");
         let render = false;
-        /** I spent a a lot of time and found this is the only legit way to
-         *   implement this effect -_-b, simple but effective.
-         *  Other ways like createInterval on hover and clearInterval on
-         *   leave or more complex ways are just not working or not working
-         *   properly...
+        /** 
+         * I spent a a lot of time and found this is the only legit way to
+         * implement this effect -_-b, simple but effective. Other ways like
+         * createInterval on hover and clearInterval on leave or more complex
+         * ways are just not working or not working properly...
          */
         widget_fun.onmouseover = () => {
             render = true;
@@ -149,10 +147,12 @@ function main() {
         widget_fun.onmouseleave = () => {
             render = false;
         }
-        // Such non frequent polling may not use a lot of cpu
+        // Such not frequent polling may not use a lot of cpu
         setInterval(() => {
             if (render)
                 gl_render()
             }, 16);
     }
 }
+
+main();
